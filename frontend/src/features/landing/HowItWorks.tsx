@@ -2,6 +2,7 @@ import { useEffect, useRef, useState, type ComponentType } from "react";
 import { Link } from "react-router-dom";
 import { ArrowRight, AudioLines, Camera, Keyboard, MessageSquareText, Sparkles, Workflow, type LucideIcon } from "lucide-react";
 import { SectionIndex } from "@/components/brand/Arcs";
+import { FluidSection } from "@/components/layout/FluidSection";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
 import { cn } from "@/lib/cn";
@@ -88,7 +89,7 @@ export function HowItWorks() {
   const step = STEPS[active]!;
 
   return (
-    <section id="how-it-works" aria-labelledby="how-title" className="scroll-mt-20 py-24 sm:py-32">
+    <FluidSection id="how-it-works" aria-labelledby="how-title" from="#dce8ff" surface="bg-surface" className="scroll-mt-20 py-24 sm:py-32">
       <div className="container-wide">
         <div className="grid gap-8 lg:grid-cols-12 lg:gap-x-10">
           <Reveal className="lg:col-span-7">
@@ -96,7 +97,7 @@ export function HowItWorks() {
             <h2 id="how-title" className="text-section mt-5">
               From voice to signs,
               <br />
-              <span className="text-ink-3">and back again.</span>
+              <span className="text-royal">and back again.</span>
             </h2>
           </Reveal>
           <Reveal delay={100} className="lg:col-span-4 lg:col-start-9 lg:self-end">
@@ -122,19 +123,19 @@ export function HowItWorks() {
                   data-step={i}
                   aria-current={wide && i === active ? "step" : undefined}
                   className={cn(
-                    "relative border-l py-8 pl-7 transition-[border-color,opacity] duration-500 lg:flex lg:min-h-[46vh] lg:flex-col lg:justify-center lg:py-10",
-                    wide ? (on ? "border-royal opacity-100" : "border-line opacity-45") : "border-line",
+                    "relative border-l py-8 pl-7 transition-[border-color] duration-500 lg:flex lg:min-h-[46vh] lg:flex-col lg:justify-center lg:py-10 [&_h3]:transition-colors [&_h3]:duration-500",
+                    wide ? (on ? "border-royal" : "border-sky-300 [&_h3]:text-ink-3") : "border-sky-300",
                   )}
                 >
                   <span
                     aria-hidden
                     className={cn(
                       "absolute top-9 -left-[0.3125rem] size-2.5 rounded-full transition-colors duration-500 lg:top-1/2 lg:-translate-y-1/2",
-                      on ? "bg-gold" : "bg-line-strong",
+                      on ? "bg-gold ring-4 ring-gold-100" : "bg-sky-300",
                     )}
                   />
                   <p className="flex items-center gap-2.5 text-sm font-medium text-royal">
-                    <span className="inline-flex size-8 items-center justify-center rounded-md bg-brand-50">
+                    <span className="inline-flex size-8 items-center justify-center rounded-xl bg-sky-100">
                       <Icon className="size-4" aria-hidden />
                     </span>
                     <span className="tabular-nums">({i + 1})</span>
@@ -145,7 +146,7 @@ export function HowItWorks() {
                   <p className="mt-4 text-[0.8125rem] font-medium tracking-[0.02em] text-ink-3">{s.detail}</p>
                   {/* Small screens: each step carries its own visual */}
                   {!wide && (
-                    <div className="relative mt-6 aspect-[4/3] overflow-hidden rounded-lg border border-line bg-stage-2" aria-hidden>
+                    <div className="relative mt-6 grid min-h-[23rem] overflow-hidden rounded-2xl bg-sky-50 ring-1 ring-sky-200 sm:block sm:aspect-[4/3] sm:min-h-0" aria-hidden>
                       <s.Visual active={!reduced} />
                     </div>
                   )}
@@ -158,8 +159,8 @@ export function HowItWorks() {
           {wide && (
             <div className="lg:col-span-7">
               <div className="sticky top-[calc(50vh-17rem)]">
-                <div className="relative aspect-[4/3] overflow-hidden rounded-xl border border-line bg-stage-2">
-                  <div className="absolute inset-x-0 top-0 z-10 flex items-center justify-between border-b border-line bg-surface/90 px-5 py-3 backdrop-blur-sm">
+                <div className="relative aspect-[4/3] overflow-hidden rounded-[1.75rem] bg-sky-50 shadow-[0_30px_60px_-36px_rgb(13_33_161/0.45)] ring-1 ring-sky-200">
+                  <div className="absolute inset-x-0 top-0 z-10 flex items-center justify-between border-b border-sky-200 bg-surface/90 px-5 py-3 backdrop-blur-sm">
                     <span className="flex items-center gap-2 text-sm font-medium text-navy">
                       {step.lane === "Speech → Sign" ? <AudioLines className="size-4 text-royal" aria-hidden /> : <Camera className="size-4 text-royal" aria-hidden />}
                       <span aria-hidden>{step.lane}</span>
@@ -167,7 +168,7 @@ export function HowItWorks() {
                     </span>
                     <span className="flex gap-1.5" aria-hidden>
                       {STEPS.map((_, i) => (
-                        <span key={i} className={cn("h-1.5 rounded-full transition-all duration-500", i === active ? "w-6 bg-royal" : i < active ? "w-1.5 bg-royal/40" : "w-1.5 bg-line-strong")} />
+                        <span key={i} className={cn("h-1.5 rounded-full transition-all duration-500", i === active ? "w-6 bg-royal" : i < active ? "w-1.5 bg-gold" : "w-1.5 bg-sky-300")} />
                       ))}
                     </span>
                   </div>
@@ -184,21 +185,23 @@ export function HowItWorks() {
         </div>
 
         {/* The wireframe's three steps, as one sentence */}
-        <Reveal className="mt-20 border-t border-line pt-10 sm:mt-28">
-          <p className="text-statement max-w-5xl text-navy">
+        <Reveal className="mt-20 border-t border-sky-200 pt-10 sm:mt-28">
+          <p className="text-statement max-w-5xl leading-[1.5] text-navy">
             {[
               ["1", "Speak naturally."],
               ["2", "See signs."],
               ["3", "Understand each other."],
             ].map(([n, text]) => (
               <span key={n} className="mr-4 inline-block whitespace-nowrap sm:mr-6">
-                <span className="mr-2 align-super text-sm font-semibold text-royal">({n})</span>
+                <span className="mr-2.5 inline-flex size-7 -translate-y-0.5 items-center justify-center rounded-full bg-gold align-middle text-sm font-bold text-navy">
+                  {n}
+                </span>
                 {text}
               </span>
             ))}
           </p>
         </Reveal>
       </div>
-    </section>
+    </FluidSection>
   );
 }

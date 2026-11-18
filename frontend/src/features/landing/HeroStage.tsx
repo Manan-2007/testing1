@@ -42,7 +42,14 @@ const CLAUSE: Record<GlossResult["clause"], string> = {
   content: "Question word",
 };
 
-export default function HeroStage({ request }: { request: { text: string; id: number } | null }) {
+export default function HeroStage({
+  request,
+  hold = false,
+}: {
+  request: { text: string; id: number } | null;
+  /** Keep the signer at rest (while the welcome scene plays). */
+  hold?: boolean;
+}) {
   const reduced = useReducedMotion();
   const [current, setCurrent] = useState<Prepared | null>(null);
   const [state, setState] = useState<PlayerState | null>(null);
@@ -120,13 +127,14 @@ export default function HeroStage({ request }: { request: { text: string; id: nu
       {/* stage disc + arcs */}
       <div
         aria-hidden
+        data-intro-target
         className="absolute top-[1%] left-1/2 aspect-square h-[80%] -translate-x-1/2 rounded-full bg-[radial-gradient(closest-side,#ffffff_0%,var(--color-stage-2)_55%,var(--color-stage)_88%,transparent_100%)]"
       />
       <Arcs draw point={false} className="absolute top-[1%] left-1/2 aspect-square h-[80%] -translate-x-1/2" />
 
       <div className="absolute inset-x-[6%] top-0 bottom-[20%]">
         <AvatarViewport
-          queue={started ? queue : undefined}
+          queue={started && !hold ? queue : undefined}
           presentation="figure"
           interactive={false}
           suspended={!visible}
@@ -141,19 +149,26 @@ export default function HeroStage({ request }: { request: { text: string; id: nu
       </div>
 
       {/* Left annotation, attached to the arc: what was said */}
-      <div className="pointer-events-none absolute top-[14%] left-0 hidden max-w-[11.5rem] xl:block" aria-hidden>
+      <div
+        className="pointer-events-none absolute top-[7%] left-0 hidden w-[12rem] animate-float rounded-2xl rounded-bl-sm bg-surface/95 px-4 py-3 shadow-[0_14px_32px_-18px_rgb(13_33_161/0.45)] ring-1 ring-sky-200 xl:block"
+        aria-hidden
+      >
         <p className="eyebrow">English</p>
-        <p className="mt-1.5 text-[1.0625rem] leading-6 font-medium text-navy">{current ? current.english : "…"}</p>
-        <span className="mt-3 block h-px w-24 bg-royal/40" />
+        <p className="mt-1 text-[1.0625rem] leading-6 font-medium text-navy">{current ? current.english : "…"}</p>
       </div>
 
       {/* Right annotation, attached to the arc: grammar on the face */}
-      <div className="pointer-events-none absolute top-[14%] right-0 hidden max-w-[11.5rem] text-right xl:block" aria-hidden>
-        <p className="eyebrow">{current ? CLAUSE[current.gloss.clause] : "ISL grammar"}</p>
-        <p className="mt-1.5 text-[0.9375rem] leading-6 text-ink-2">
+      <div
+        className="pointer-events-none absolute top-[18%] right-0 hidden w-[12rem] animate-float rounded-2xl rounded-br-sm bg-surface/95 px-4 py-3 text-right shadow-[0_14px_32px_-18px_rgb(13_33_161/0.45)] ring-1 ring-sky-200 [animation-delay:-3s] xl:block"
+        aria-hidden
+      >
+        <p className="eyebrow flex items-center justify-end gap-1.5">
+          <span className="size-1.5 rounded-full bg-gold" />
+          {current ? CLAUSE[current.gloss.clause] : "ISL grammar"}
+        </p>
+        <p className="mt-1 text-[0.9375rem] leading-6 text-ink-2">
           {markers.length ? markers[0]!.charAt(0).toUpperCase() + markers[0]!.slice(1) : "Neutral face"}
         </p>
-        <span className="mt-3 ml-auto block h-px w-24 bg-royal/40" />
       </div>
 
       {/* Gloss rail with the gold point under the active sign */}

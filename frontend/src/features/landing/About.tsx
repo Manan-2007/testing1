@@ -32,7 +32,7 @@ export function About() {
   const panelId = useId();
 
   return (
-    <section id="about" aria-labelledby="about-title" className="relative scroll-mt-20 overflow-hidden py-24 sm:py-32">
+    <section id="about" aria-labelledby="about-title" className="relative scroll-mt-20 overflow-hidden bg-surface py-24 sm:py-32">
       <div className="container-wide relative">
         <Reveal>
           <SectionIndex index="03" label="About us" />
@@ -45,7 +45,10 @@ export function About() {
           <Reveal className="lg:col-span-8">
             <p className="text-[1.75rem] leading-[1.25] font-medium tracking-[-0.03em] text-navy sm:text-[2.5rem] sm:leading-[1.18]">
               Parlance grew out of VOX, our earlier experiment in sign recognition. We rebuilt it around one idea:{" "}
-              <span className="text-royal">two people should be able to take turns on the same screen</span>, each in
+              <span className="box-decoration-clone bg-[linear-gradient(transparent_62%,rgb(238_198_67/0.5)_62%,rgb(238_198_67/0.5)_92%,transparent_92%)] text-royal">
+                two people should be able to take turns on the same screen
+              </span>
+              , each in
               their own language, without waiting for help to arrive.
             </p>
             <p className="mt-8 max-w-[60ch] text-[1.0625rem] leading-[1.7] text-ink-2">
@@ -56,12 +59,18 @@ export function About() {
           </Reveal>
 
           <Reveal delay={100} className="lg:col-span-4">
-            <ul className="border-t border-line">
+            <ul className="grid gap-3">
               {BELIEFS.map(([title, body], i) => {
                 const Icon = BELIEF_ICONS[i]!;
                 return (
-                  <li key={title} className="flex gap-4 border-b border-line py-5">
-                    <span className="inline-flex size-10 shrink-0 items-center justify-center rounded-md bg-brand-50 text-royal" aria-hidden>
+                  <li key={title} className="flex gap-4 rounded-[1.25rem] bg-sky-50 p-5 ring-1 ring-sky-200">
+                    <span
+                      className={cn(
+                        "inline-flex size-10 shrink-0 items-center justify-center rounded-2xl",
+                        i === 1 ? "bg-gold-100 text-navy" : "bg-surface text-royal ring-1 ring-sky-200",
+                      )}
+                      aria-hidden
+                    >
                       <Icon className="size-5" />
                     </span>
                     <div>
@@ -76,7 +85,7 @@ export function About() {
         </div>
 
         {/* The people: the wireframe's "About Us" reveal */}
-        <div className="mt-16 border-t border-navy sm:mt-20">
+        <div className="mt-16 rounded-[1.75rem] bg-sky-50 px-5 ring-1 ring-sky-200 sm:mt-20 sm:px-8">
           <button
             type="button"
             aria-expanded={open}
@@ -93,7 +102,7 @@ export function About() {
             <span
               className={cn(
                 "inline-flex size-12 shrink-0 items-center justify-center rounded-full border transition-colors",
-                open ? "border-navy bg-navy text-white" : "border-line-strong text-navy group-hover:border-navy",
+                open ? "border-royal bg-royal text-white" : "border-sky-300 bg-surface text-royal group-hover:border-royal",
               )}
               aria-hidden
             >
@@ -120,12 +129,15 @@ export function About() {
                       initial={{ opacity: 0, y: 12 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: 0.08 + i * 0.06, duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-                      className="grid grid-cols-[3rem_1fr_auto] items-center gap-4 border-t border-line py-5 sm:grid-cols-[4rem_3.5rem_1fr_auto] sm:gap-6"
+                      className="grid grid-cols-[3rem_1fr_auto] items-center gap-4 border-t border-sky-200 py-5 sm:grid-cols-[4rem_3.5rem_1fr_auto] sm:gap-6"
                     >
                       <span className="text-sm font-semibold text-royal tabular-nums">{member.slot}</span>
                       <span
                         aria-hidden
-                        className="hidden size-12 items-center justify-center rounded-full border border-line-strong text-sm font-semibold text-navy sm:inline-flex"
+                        className={cn(
+                          "hidden size-12 items-center justify-center rounded-full text-sm font-semibold sm:inline-flex",
+                          ["bg-royal text-white", "bg-gold text-navy", "bg-sky-200 text-navy", "bg-navy text-white", "bg-surface text-royal ring-1 ring-sky-300"][i],
+                        )}
                       >
                         {initials(member.name)}
                       </span>

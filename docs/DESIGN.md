@@ -1,6 +1,19 @@
-# Parlance design direction (v2)
+# Parlance design direction (v3)
 
-## Why a redesign
+## v3: warmer, lighter, more human
+
+v2 read as a corporate SaaS page: mostly white and navy, formal compositions, very little yellow. v3 keeps the structure and the demo, and changes the atmosphere.
+
+- **Light blue dominates.** A sky scale derived from Royal Blue (`sky-25` #F7FAFF, `sky-50` #EDF3FF pale, `sky-100` #E3ECFF, `sky-200` #DCE8FF powder, `sky-300` #C7D9FF soft sky). Pages sit on pale blue, bands and cards use powder and pale, and white is a surface rather than the background. Royal is energy (controls, highlights, the intro); navy is contrast (headlines, the footer).
+- **Yellow is warmth, used on purpose.** Numbered section chips, the hand-drawn underline in the hero, active and visited step dots, gloss separators, the stat highlight, icon tiles, the interpreter card, the footer call to action, and the intro's fingertip trail and reveal rim. Never a whole section.
+- **Friendlier shapes where people touch or read.** Cards 20 to 28px radius, pill chips and calls to action; controls inside the workspaces stay crisp.
+- **Welcome scene.** A blue panel rises (its top edge settling flat), a pair of stylised hands signs WELCOME from the real ISLRTC recording, and the blue collapses through a gold-rimmed circle into the signer's stage on the homepage, which carries on the conversation. About 3 seconds; skippable; once a day; never under reduced motion. See `features/landing/intro/`.
+- **Fluid section edges.** As a major section rises into view its surface's top edge is a shallow curve, which settles square by the upper third of the screen (`components/layout/FluidSection.tsx`). Used four times: the conversation strip, How it works, Why it matters, and the footer.
+- **Hero.** "Two languages. One conversation." The headline is sized from its measured width so it never overflows its column (the cause of the v2 overlap at 320px and near 1100px). The live demo is unchanged apart from its floating labels, which became small cards that sit above the arcs.
+
+## v2 notes (still apply unless v3 says otherwise)
+
+### Why a redesign
 
 v1 inherited VOX's interface grammar: every surface was a boxed card with an icon + title + actions header, the signer lived in a framed "stage" with a status chip, controls were VOX's segmented toggles and word chips, and both workspaces used VOX's stage-left / panel-right session layout. The landing page repeated one rounded-card grid in every section. It read as VOX recoloured.
 

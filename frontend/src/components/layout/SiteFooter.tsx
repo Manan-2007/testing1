@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
-import { ArrowUpRight, AudioLines, Hand, Users, Workflow } from "lucide-react";
+import { ArrowUpRight, AudioLines, Hand, Play, Users, Workflow } from "lucide-react";
 import { Arcs } from "@/components/brand/Arcs";
+import { FluidSection } from "./FluidSection";
 import { Logo } from "./Logo";
 
 /** The wireframe's four destinations, as the footer's index. */
@@ -20,9 +21,9 @@ const MORE = [
   { to: "/app/help", label: "Help" },
 ];
 
-export function SiteFooter() {
+export function SiteFooter({ onReplayIntro }: { onReplayIntro?: () => void }) {
   return (
-    <footer className="relative overflow-hidden bg-navy pb-safe-tabbar text-white">
+    <FluidSection as="footer" from="#ffffff" surface="bg-navy" depth={180} className="overflow-hidden pb-safe-tabbar text-white">
       <Arcs tone="inverse" point={false} className="absolute -top-40 -right-40 size-[36rem] opacity-70" />
       <div className="container-wide relative pt-20 sm:pt-28">
         <div className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
@@ -33,7 +34,7 @@ export function SiteFooter() {
           <div className="flex flex-col gap-3 sm:flex-row">
             <Link
               to="/app/speech-to-sign"
-              className="inline-flex h-[3.25rem] items-center justify-center gap-2 rounded-sm bg-white px-6 font-medium text-navy transition-colors hover:bg-brand-50"
+              className="inline-flex h-[3.25rem] items-center justify-center gap-2 rounded-full bg-gold px-7 font-semibold text-navy transition-colors hover:bg-gold-300"
             >
               Open the translator <ArrowUpRight className="size-5" aria-hidden />
             </Link>
@@ -85,7 +86,18 @@ export function SiteFooter() {
         </div>
 
         <div className="flex flex-col gap-2 border-t border-white/15 py-6 text-[0.8125rem] text-white/55 sm:flex-row sm:justify-between">
-          <p>Team APX_GP · The Builder&rsquo;s Theory 1.0</p>
+          <p className="flex flex-wrap items-center gap-x-4 gap-y-1">
+            Team APX_GP · The Builder&rsquo;s Theory 1.0
+            {onReplayIntro && (
+              <button
+                type="button"
+                onClick={onReplayIntro}
+                className="inline-flex min-h-8 items-center gap-1.5 rounded-full px-1 text-white/75 underline decoration-white/30 underline-offset-4 transition-colors hover:text-gold hover:decoration-gold"
+              >
+                <Play className="size-3" aria-hidden /> Replay the welcome
+              </button>
+            )}
+          </p>
           <p>No video is stored or sent. Sign motion from the ISLRTC dictionary.</p>
         </div>
       </div>
@@ -95,6 +107,6 @@ export function SiteFooter() {
       >
         parlance
       </p>
-    </footer>
+    </FluidSection>
   );
 }

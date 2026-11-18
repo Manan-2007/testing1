@@ -1,5 +1,6 @@
 import { Fragment, type ComponentType } from "react";
 import { ArrowRight, AudioLines, Ear, Hand, Lightbulb, MessageSquareText, Mic } from "lucide-react";
+import { FluidSection } from "@/components/layout/FluidSection";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
 import { cn } from "@/lib/cn";
 
@@ -24,8 +25,8 @@ function Sequence({ steps, tone }: { steps: Step[]; tone: "primary" | "secondary
           <span className="flex items-center gap-3">
             <span
               className={cn(
-                "inline-flex size-10 items-center justify-center rounded-md border sm:size-12",
-                tone === "primary" ? "border-brand-100 bg-brand-50 text-royal" : "border-line bg-surface text-navy",
+                "inline-flex size-10 items-center justify-center rounded-2xl sm:size-12",
+                tone === "primary" ? "bg-surface text-royal shadow-xs ring-1 ring-sky-300" : "bg-gold text-navy",
               )}
             >
               <Icon className="size-5 sm:size-[1.375rem]" aria-hidden />
@@ -33,16 +34,16 @@ function Sequence({ steps, tone }: { steps: Step[]; tone: "primary" | "secondary
             <span
               className={cn(
                 "text-2xl font-semibold tracking-[-0.035em] sm:text-[2rem]",
-                tone === "primary" ? "text-navy" : "text-ink-2",
+                "text-navy",
               )}
             >
               {label}
             </span>
           </span>
           {i < steps.length - 1 ? (
-            <ArrowRight className="size-5 text-ink-3" aria-hidden />
+            <ArrowRight className="size-5 text-royal/70" aria-hidden />
           ) : (
-            <span className="size-2 rounded-full bg-gold" aria-hidden />
+            <span className={cn("size-2 rounded-full", tone === "primary" ? "bg-gold" : "bg-royal")} aria-hidden />
           )}
         </Fragment>
       ))}
@@ -73,21 +74,21 @@ function Row({ steps, reverse, tone, still }: { steps: Step[]; reverse?: boolean
 export function FlowStrip() {
   const reduced = useReducedMotion();
   return (
-    <section aria-label="How a conversation flows" className="border-b border-line bg-surface py-9 sm:py-11">
+    <FluidSection aria-label="How a conversation flows" from="#ffffff" surface="bg-sky-200" depth={120} className="py-12 sm:py-16">
       <p className="sr-only">
         A hearing person speaks, Parlance signs it, and the signer understands. In reverse, a signer signs, Parlance
         shows the text, and the hearing person hears it as voice.
       </p>
       <div aria-hidden className="space-y-5">
-        <div className="container-wide flex items-center gap-2 text-xs font-semibold tracking-[0.08em] text-ink-3 uppercase">
+        <div className="container-wide flex items-center gap-2 text-xs font-semibold tracking-[0.08em] text-navy/75 uppercase">
           <AudioLines className="size-3.5 text-royal" /> Hearing person to signer
         </div>
         <Row steps={FORWARD} tone="primary" still={reduced} />
         <Row steps={REVERSE} tone="secondary" reverse still={reduced} />
-        <div className="container-wide flex items-center justify-end gap-2 text-xs font-semibold tracking-[0.08em] text-ink-3 uppercase">
+        <div className="container-wide flex items-center justify-end gap-2 text-xs font-semibold tracking-[0.08em] text-navy/75 uppercase">
           Signer to hearing person <Hand className="size-3.5 text-royal" />
         </div>
       </div>
-    </section>
+    </FluidSection>
   );
 }

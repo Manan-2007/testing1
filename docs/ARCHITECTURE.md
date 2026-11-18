@@ -37,7 +37,8 @@ frontend/
       layout/         headers, footer, mobile tab bars, skip link, logo
       avatar/         AvatarViewport (React wrapper around the engine stage), PlaybackBar
     features/
-      landing/        Hero, FlowStrip, HowItWorks, WhyItMatters, About, CtaBand
+      landing/        Hero, FlowStrip, HowItWorks, WhyItMatters, About
+        intro/        welcome scene: SigningHands (ISLRTC WELCOME as vector hands), IntroScene, introState
       speech-to-sign/ workspace: Composer, GlossPanel, SignerPanel, quick phrases
       sign-to-text/   workspace: CameraPanel, RecognitionReadout, SentencePanel
       history/        HistoryPage

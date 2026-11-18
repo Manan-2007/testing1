@@ -32,9 +32,20 @@
   --color-brand-800: #06125f;
   --color-brand-900: #011638;
 
-  /* Gold, for highlights only */
+  /* Light blues (v3): the dominant atmosphere. Derived from Royal Blue,
+     lighter and warmer than the brand tints, for surfaces and sections. */
+  --color-sky-25: #f7faff;
+  --color-sky-50: #edf3ff;  /* pale blue: page */
+  --color-sky-100: #e3ecff; /* light blue surface */
+  --color-sky-200: #dce8ff; /* powder blue: sections */
+  --color-sky-300: #c7d9ff; /* soft sky: rings, illustration */
+  --color-sky-400: #9dbaff;
+  --color-sky-500: #5b7ff0;
+
+  /* Gold: warmth and "now". Marks, dots, highlights; never a whole section. */
   --color-gold-50: #fdf8e8;
   --color-gold-100: #fbf1cf;
+  --color-gold-200: #f7e3a1;
   --color-gold-300: #f4dc8a;
   --color-gold-400: #eec643;
   --color-gold-800: #6b4e00;
@@ -46,8 +57,8 @@
   --color-line: #d8dce6;
   --color-line-soft: #e5e8ef;
   --color-line-strong: #c3c9d6;
-  --color-stage: #e9ecf8;
-  --color-stage-2: #f5f6fc;
+  --color-stage: #e3ecff;
+  --color-stage-2: #f3f7ff;
   --color-ink-2: #3a4050;
   --color-ink-3: #565d6e;
 
@@ -82,6 +93,8 @@
   --animate-draw: draw 1.1s var(--ease-out-soft) both;
   --animate-rise-lg: rise-lg 0.8s var(--ease-out-soft) both;
   --animate-blink: blink 1.1s steps(1) infinite;
+  --animate-ripple: ripple 2.1s var(--ease-out-soft) infinite;
+  --animate-float: float 6s ease-in-out infinite;
 
   @keyframes pulse-ring {
     0% { box-shadow: 0 0 0 0 rgb(180 35 24 / 0.38); }
@@ -115,6 +128,14 @@
   @keyframes grow {
     from { transform: scaleX(0); }
     to { transform: scaleX(1); }
+  }
+  @keyframes ripple {
+    from { opacity: 0.9; transform: scale(0.55); }
+    to { opacity: 0; transform: scale(1.25); }
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-6px); }
   }
   @keyframes blink {
     50% { opacity: 0; }
@@ -213,6 +234,17 @@
   letter-spacing: -0.055em;
 }
 
+/* The hero headline. Sized so "One conversation." sits on one line in its
+   column from 320px phones (or 400% zoom) to 1920px desktops; it is never
+   clipped. Measured: that line is 7.83em wide in Geist 600. */
+@utility text-hero {
+  font-size: clamp(2.2rem, 9.4vw, 4.5rem);
+  line-height: 1.02;
+  font-weight: 600;
+  letter-spacing: -0.045em;
+  @media (width >= 64rem) { font-size: clamp(3rem, 4.6vw, 3.9rem); }
+}
+
 @utility text-section {
   font-size: clamp(2.25rem, 4.2vw, 3.75rem);
   line-height: 1;
@@ -273,6 +305,10 @@ html[data-motion="reduce"] *::after {
   scroll-behavior: auto !important;
 }
 html[data-motion="full"] { scroll-behavior: smooth; }
+
+/* While the welcome scene plays, the hero's entrance waits, then runs as the
+   blue lifts. Paused CSS animations hold their first keyframe. */
+[data-intro="playing"] .intro-hold [class*="animate-"] { animation-play-state: paused !important; }
 
 /* Engine canvas fills its host. */
 .avatar-canvas > canvas {
